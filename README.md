@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>祝福语复制工具</title>
+  <title>端午祝福语</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
@@ -13,7 +13,6 @@
         extend: {
           colors: {
             primary: '#165DFF',
-            secondary: '#7B61FF',
             success: '#00B42A',
             neutral: '#F5F7FA',
             'neutral-dark': '#4E5969',
@@ -22,9 +21,8 @@
             inter: ['Inter', 'system-ui', 'sans-serif'],
           },
           boxShadow: {
-            'custom': '0 4px 20px rgba(0, 0, 0, 0.08)',
-            'hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
-            'highlight': '0 0 0 4px rgba(22, 93, 255, 0.2)',
+            'custom': '0 2px 8px rgba(0, 0, 0, 0.06)',
+            'highlight': '0 0 0 3px rgba(22, 93, 255, 0.2)',
           }
         },
       }
@@ -49,89 +47,55 @@
         transform: scale(1.02);
       }
       .card-highlight {
-        transform: scale(1.05);
-        box-shadow: 0 10px 30px rgba(22, 93, 255, 0.2);
+        transform: scale(1.03);
+        box-shadow: 0 6px 20px rgba(22, 93, 255, 0.15);
         z-index: 10;
+      }
+      .search-fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        padding: 1rem;
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       }
     }
   </style>
 </head>
-<body class="font-inter bg-gradient-to-br from-neutral to-white min-h-screen flex flex-col">
-  <!-- 导航栏 -->
-  <nav class="bg-white shadow-sm sticky top-0 z-10 transition-all duration-300" id="navbar">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex items-center">
-          <span class="text-primary font-bold text-xl">祝福语复制工具</span>
-        </div>
-        <div class="flex items-center space-x-4">
-          <button id="themeToggle" class="p-2 rounded-full hover:bg-neutral transition-custom">
-            <i class="fa fa-moon-o text-neutral-dark"></i>
-          </button>
-          <button id="refreshBtn" class="p-2 rounded-full hover:bg-neutral transition-custom">
-            <i class="fa fa-refresh text-neutral-dark"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- 主内容区 -->
-  <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- 介绍卡片 -->
-    <div class="bg-white rounded-2xl shadow-custom p-6 mb-8 transform transition-all hover:shadow-hover">
-      <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-800 mb-4">端午祝福语</h1>
-      <p class="text-gray-600 mb-4 text-balance">
-        输入1-100的数字
-      </p>
-    </div>
-
-    <!-- 搜索 -->
-    <div class="mb-8">
+<body class="font-inter bg-neutral min-h-screen">
+  <!-- 搜索框 -->
+  <div id="searchContainer" class="px-4 py-6 bg-white">
+    <div class="max-w-6xl mx-auto">
       <div class="relative">
         <input type="text" id="searchInput" placeholder="输入1-100的数字搜索..." 
                class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-custom" maxlength="3">
         <i class="fa fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
       </div>
     </div>
+  </div>
 
+  <!-- 主内容区 -->
+  <main class="max-w-6xl mx-auto px-4 pb-16 pt-4">
     <!-- 祝福语列表 -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blessingContainer">
+    <div class="grid grid-cols-1 gap-4" id="blessingContainer">
       <!-- 祝福语卡片将通过JavaScript动态生成 -->
-    </div>
-
-    <!-- 加载更多 -->
-    <div class="mt-12 text-center">
-      <button id="loadMoreBtn" class="px-6 py-3 bg-white border border-primary text-primary rounded-xl hover:bg-primary hover:text-white transition-custom shadow-sm">
-        加载更多 <i class="fa fa-angle-down ml-2"></i>
-      </button>
     </div>
   </main>
 
   <!-- 页脚 -->
-  <footer class="bg-white border-t border-gray-200 py-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 祝福语复制工具 </p>
-        <div class="flex space-x-6">
-          <a href="#" class="text-gray-500 hover:text-primary transition-custom">
-            <i class="fa fa-github text-xl"></i>
-          </a>
-          <a href="#" class="text-gray-500 hover:text-primary transition-custom">
-            <i class="fa fa-twitter text-xl"></i>
-          </a>
-          <a href="#" class="text-gray-500 hover:text-primary transition-custom">
-            <i class="fa fa-linkedin text-xl"></i>
-          </a>
-        </div>
-      </div>
+  <footer class="bg-white border-t border-gray-200 py-4">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-gray-500 text-xs">放开那三国2祝福语工具 </p>
     </div>
   </footer>
 
   <!-- 复制成功提示 -->
-  <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 flex items-center">
+  <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-success text-white px-6 py-3 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 flex items-center">
     <i class="fa fa-check-circle mr-2"></i>
-    <span>复制成功!</span>
+    <span>已复制</span>
   </div>
 
   <script>
@@ -174,7 +138,7 @@
       { id: 35, content: "咸甜之争烽烟再起" },
       { id: 36, content: "只有油润不腻味道香甜的肉粽才是王道" },
       { id: 37, content: "深红色的咸肉泛着油光" },
-      { id: 38, content: "咬上一口仿佛时间都静止了" },
+      { id: 38, content: "咬上一口仿佛时间都禁止了" },
       { id: 39, content: "还有鲜香无比的蛋黄肉粽" },
       { id: 40, content: "丰富的口感让我欲罢不能" },
       { id: 41, content: "肉粽知道灵魂的去处" },
@@ -241,12 +205,29 @@
 
     // 页面加载完成后执行
     document.addEventListener('DOMContentLoaded', function() {
-      // 渲染前10条祝福语
-      renderBlessings(blessings.slice(0, 10));
+      // 渲染全部100条祝福语
+      renderBlessings(blessings);
       
       // 初始化事件监听
       initEventListeners();
+      
+      // 监听滚动事件，固定搜索框
+      window.addEventListener('scroll', handleScroll);
     });
+
+    // 处理滚动事件
+    function handleScroll() {
+      const searchContainer = document.getElementById('searchContainer');
+      const scrollTop = window.scrollY;
+      
+      if (scrollTop > 50) {
+        searchContainer.classList.add('search-fixed');
+        document.body.style.paddingTop = '100px';
+      } else {
+        searchContainer.classList.remove('search-fixed');
+        document.body.style.paddingTop = '0';
+      }
+    }
 
     // 渲染祝福语列表
     function renderBlessings(blessingsList, highlightedId = null) {
@@ -267,20 +248,20 @@
         const card = document.createElement('div');
         const isHighlighted = highlightedId === blessing.id;
         
-        card.className = `bg-white rounded-2xl shadow-custom p-6 scale-hover ${isHighlighted ? 'card-highlight border-2 border-primary' : ''}`;
+        card.className = `bg-white rounded-xl shadow-custom p-4 scale-hover ${isHighlighted ? 'card-highlight border border-primary' : 'border border-gray-100'}`;
         card.innerHTML = `
-          <div class="flex items-start mb-4">
-            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3 flex-shrink-0">
-              <span class="text-primary font-bold">${blessing.id}</span>
+          <div class="flex items-start mb-3">
+            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3 flex-shrink-0">
+              <span class="text-primary font-bold text-sm">${blessing.id}</span>
             </div>
           </div>
-          <p class="text-gray-800 mb-4 text-balance ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
-            ${blessing.content === '无' ? '（无内容）' : blessing.content}
+          <p class="text-gray-800 mb-3 text-balance text-sm ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
+            ${blessing.content === '无' ? '（无）' : blessing.content}
           </p>
           <div class="flex justify-between items-center">
             <span class="text-xs text-gray-400">ID: ${blessing.id.toString().padStart(3, '0')}</span>
-            <button class="copy-btn px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-custom flex items-center" data-id="${blessing.id}">
-              <i class="fa fa-copy mr-2"></i> 复制
+            <button class="copy-btn px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-custom flex items-center text-sm" data-id="${blessing.id}">
+              <i class="fa fa-copy mr-1"></i> 复制
             </button>
           </div>
         `;
@@ -311,7 +292,7 @@
           
           // 更新按钮状态
           const originalText = this.innerHTML;
-          this.innerHTML = '<i class="fa fa-check mr-2"></i> 已复制';
+          this.innerHTML = '<i class="fa fa-check mr-1"></i> 已复制';
           this.classList.add('bg-success');
           this.classList.remove('bg-primary');
           
@@ -332,9 +313,9 @@
       searchInput.addEventListener('input', function() {
         const searchTerm = this.value.trim();
         
-        // 清空输入时显示前10条祝福语
+        // 清空输入时显示全部祝福语
         if (searchTerm === '') {
-          renderBlessings(blessings.slice(0, 10));
+          renderBlessings(blessings);
           return;
         }
         
@@ -360,82 +341,6 @@
           renderBlessings([]);
         }
       });
-      
-      // 主题切换
-      const themeToggle = document.getElementById('themeToggle');
-      themeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark-mode');
-        const icon = this.querySelector('i');
-        if (icon.classList.contains('fa-moon-o')) {
-          icon.classList.remove('fa-moon-o');
-          icon.classList.add('fa-sun-o');
-        } else {
-          icon.classList.remove('fa-sun-o');
-          icon.classList.add('fa-moon-o');
-        }
-      });
-      
-      // 刷新按钮
-      const refreshBtn = document.getElementById('refreshBtn');
-      refreshBtn.addEventListener('click', function() {
-        // 添加旋转动画
-        this.querySelector('i').classList.add('fa-spin');
-        
-        // 随机排序祝福语
-        const shuffled = [...blessings].sort(() => Math.random() - 0.5);
-        renderBlessings(shuffled.slice(0, 10));
-        
-        // 重置按钮状态
-        setTimeout(() => {
-          this.querySelector('i').classList.remove('fa-spin');
-        }, 500);
-      });
-      
-      // 加载更多按钮
-      const loadMoreBtn = document.getElementById('loadMoreBtn');
-      loadMoreBtn.addEventListener('click', function() {
-        // 获取当前已显示的数量
-        const currentCount = document.querySelectorAll('#blessingContainer > div').length;
-        
-        // 如果已经显示全部，则提示
-        if (currentCount >= blessings.length) {
-          showToast('已经显示全部祝福语');
-          return;
-        }
-        
-        // 显示加载中状态
-        this.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 加载中...';
-        this.disabled = true;
-        
-        // 模拟加载延迟，然后显示更多
-        setTimeout(() => {
-          // 每次加载20条
-          const nextCount = Math.min(currentCount + 90, blessings.length);
-          renderBlessings(blessings.slice(0, nextCount));
-          
-          // 更新按钮状态
-          if (nextCount >= blessings.length) {
-            this.innerHTML = '没有更多了 <i class="fa fa-check ml-2"></i>';
-            this.classList.remove('bg-white', 'border-primary', 'text-primary', 'hover:bg-primary', 'hover:text-white');
-            this.classList.add('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
-          } else {
-            this.innerHTML = '加载更多 <i class="fa fa-angle-down ml-2"></i>';
-            this.disabled = false;
-          }
-        }, 800);
-      });
-      
-      // 滚动时导航栏样式变化
-      window.addEventListener('scroll', function() {
-        const navbar = document.getElementById('navbar');
-        if (window.scrollY > 10) {
-          navbar.classList.add('shadow-md');
-          navbar.classList.remove('shadow-sm');
-        } else {
-          navbar.classList.remove('shadow-md');
-          navbar.classList.add('shadow-sm');
-        }
-      });
     }
 
     // 复制到剪贴板
@@ -455,7 +360,7 @@
     }
 
     // 显示提示框
-    function showToast(message = '复制成功!') {
+    function showToast(message = '已复制') {
       const toast = document.getElementById('toast');
       toast.querySelector('span').textContent = message;
       toast.classList.replace('opacity-0', 'opacity-100');
@@ -465,6 +370,5 @@
       }, 2000);
     }
   </script>
-</body>
-</html>
+
     
