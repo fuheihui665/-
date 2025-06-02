@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -88,7 +88,7 @@
   <!-- 页脚 -->
   <footer class="bg-white border-t border-gray-200 py-4">
     <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-gray-500 text-xs">放开那三国2祝福语工具 </p>
+      <p class="text-gray-500 text-xs"> 2025 祝福语工具</p>
     </div>
   </footer>
 
@@ -99,7 +99,7 @@
   </div>
 
   <script>
-    // 祝福语数据
+    // 祝福语数据（已更新49-100条）
     const blessings = [
       { id: 1, content: "祝大家端午安康" },
       { id: 2, content: "香囊寄思" },
@@ -138,7 +138,7 @@
       { id: 35, content: "咸甜之争烽烟再起" },
       { id: 36, content: "只有油润不腻味道香甜的肉粽才是王道" },
       { id: 37, content: "深红色的咸肉泛着油光" },
-      { id: 38, content: "咬上一口仿佛时间都禁止了" },
+      { id: 38, content: "咬上一口仿佛时间都静止了" },
       { id: 39, content: "还有鲜香无比的蛋黄肉粽" },
       { id: 40, content: "丰富的口感让我欲罢不能" },
       { id: 41, content: "肉粽知道灵魂的去处" },
@@ -165,12 +165,12 @@
       { id: 62, content: "愿你平安喜乐" },
       { id: 63, content: "在江面的龙舟上再续永恒的主题" },
       { id: 64, content: "相比粽子的甜咸我在意的是假期的长短" },
-      { id: 65, content: "无" },
+      { id: 65, content: "汨罗江中藏着一位先贤的故事" },
       { id: 66, content: "一层层的粽叶包裹的都是生活的香甜" },
       { id: 67, content: "整个六月都飘着艾叶配粽子的香气" },
       { id: 68, content: "我永远支持甜粽" },
       { id: 69, content: "没什么好说的粽子就该是咸的" },
-      { id: 70, content: "无" },
+      { id: 70, content: "祝福语伴着春风来了" },
       { id: 71, content: "甜的咸的其实都行" },
       { id: 72, content: "让我们一起干了这杯雄黄酒" },
       { id: 73, content: "这枚香袋是我亲手做的" },
@@ -187,7 +187,7 @@
       { id: 84, content: "这五彩的丝线缠着的是我的无尽牵挂" },
       { id: 85, content: "我可是最棒的龙舟手" },
       { id: 86, content: "希望你的六月有西瓜的清凉" },
-      { id: 87, content: "无" },
+      { id: 87, content: "说实话咸的我能吃甜的我也可以" },
       { id: 88, content: "希望六月能善待你" },
       { id: 89, content: "一株暗香四溢的艾草传递着我的情意" },
       { id: 90, content: "端午假期能见到你才是最幸福的事" },
@@ -200,7 +200,7 @@
       { id: 97, content: "咸蛋黄遇见白糯米" },
       { id: 98, content: "幸运的我遇见最好的你" },
       { id: 99, content: "我从咸粽区来看甜粽区的你" },
-      { id: 100, content: "无" }
+      { id: 100, content: "五彩绳缠住了思念" }
     ];
 
     // 页面加载完成后执行
@@ -256,7 +256,7 @@
             </div>
           </div>
           <p class="text-gray-800 mb-3 text-balance text-sm ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
-            ${blessing.content === '无' ? '（无）' : blessing.content}
+            ${blessing.content === '无' ? '（无内容）' : blessing.content}
           </p>
           <div class="flex justify-between items-center">
             <span class="text-xs text-gray-400">ID: ${blessing.id.toString().padStart(3, '0')}</span>
@@ -370,5 +370,6 @@
       }, 2000);
     }
   </script>
-
+</body>
+</html>
     
