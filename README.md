@@ -15,14 +15,16 @@
             primary: '#165DFF',
             success: '#00B42A',
             neutral: '#F5F7FA',
-            'neutral-dark': '#4E5969',
+            'neutral-light': '#F9FAFB',
           },
           fontFamily: {
             inter: ['Inter', 'system-ui', 'sans-serif'],
           },
           boxShadow: {
-            'custom': '0 2px 8px rgba(0, 0, 0, 0.06)',
-            'highlight': '0 0 0 3px rgba(22, 93, 255, 0.2)',
+            'ultra-micro': '0 1px 2px rgba(0,0,0,0.04)',
+          },
+          borderRadius: {
+            'xs': '2px',
           }
         },
       }
@@ -30,76 +32,51 @@
   </script>
   
   <style type="text/tailwindcss">
-    @layer utilities {
-      .content-auto {
-        content-visibility: auto;
-      }
-      .text-balance {
-        text-wrap: balance;
-      }
-      .transition-custom {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .scale-hover {
-        transition: transform 0.2s ease;
-      }
-      .scale-hover:hover {
-        transform: scale(1.02);
-      }
-      .card-highlight {
-        transform: scale(1.03);
-        box-shadow: 0 6px 20px rgba(22, 93, 255, 0.15);
-        z-index: 10;
-      }
-      .search-fixed {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 50;
-        padding: 1rem;
-        background-color: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(8px);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      }
+    body {
+      overscroll-behavior: none;
+    }
+    .blessing-card {
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .blessing-card:hover {
+      transform: translateX(2px);
+      box-shadow: 0 1px 4px rgba(22, 93, 255, 0.08);
+    }
+    .search-focus {
+      box-shadow: 0 0 0 2px rgba(22, 93, 255, 0.2);
     }
   </style>
 </head>
-<body class="font-inter bg-neutral min-h-screen">
-  <!-- 搜索框 -->
-  <div id="searchContainer" class="px-4 py-6 bg-white">
+<body class="font-inter bg-neutral-light min-h-screen">
+
+  <div class="px-3 py-4 bg-white">
     <div class="max-w-6xl mx-auto">
       <div class="relative">
         <input type="text" id="searchInput" placeholder="输入1-100的数字搜索..." 
-               class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-custom" maxlength="3">
-        <i class="fa fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+               class="w-full pl-8 pr-3 py-2 rounded-xs border border-gray-100 focus:outline-none text-xs" maxlength="3">
+        <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
       </div>
     </div>
   </div>
 
-  <!-- 主内容区 -->
-  <main class="max-w-6xl mx-auto px-4 pb-16 pt-4">
-    <!-- 祝福语列表 -->
-    <div class="grid grid-cols-1 gap-4" id="blessingContainer">
+  <main class="max-w-6xl mx-auto px-3 pb-10">
+    <div class="grid grid-cols-1 gap-2" id="blessingContainer">
       <!-- 祝福语卡片将通过JavaScript动态生成 -->
     </div>
   </main>
 
-  <!-- 页脚 -->
-  <footer class="bg-white border-t border-gray-200 py-4">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-gray-500 text-xs"> 2025 祝福语工具</p>
+  <footer class="bg-white border-t border-gray-100 py-2">
+    <div class="text-center text-[10px] text-gray-400">
+      © 2025 祝福语工具 - 让表达更简单
     </div>
   </footer>
 
-  <!-- 复制成功提示 -->
-  <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-success text-white px-6 py-3 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 flex items-center">
-    <i class="fa fa-check-circle mr-2"></i>
+  <div id="toast" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-success text-white px-3 py-1.5 rounded-xs shadow-sm opacity-0 transition-opacity duration-200 text-xs">
+    <i class="fa fa-check mr-1"></i>
     <span>已复制</span>
   </div>
 
   <script>
-    // 祝福语数据（已更新49-100条）
     const blessings = [
       { id: 1, content: "祝大家端午安康" },
       { id: 2, content: "香囊寄思" },
@@ -203,171 +180,74 @@
       { id: 100, content: "五彩绳缠住了思念" }
     ];
 
-    // 页面加载完成后执行
-    document.addEventListener('DOMContentLoaded', function() {
-      // 渲染全部100条祝福语
-      renderBlessings(blessings);
-      
-      // 初始化事件监听
-      initEventListeners();
-      
-      // 监听滚动事件，固定搜索框
-      window.addEventListener('scroll', handleScroll);
-    });
-
-    // 处理滚动事件
-    function handleScroll() {
-      const searchContainer = document.getElementById('searchContainer');
-      const scrollTop = window.scrollY;
-      
-      if (scrollTop > 50) {
-        searchContainer.classList.add('search-fixed');
-        document.body.style.paddingTop = '100px';
-      } else {
-        searchContainer.classList.remove('search-fixed');
-        document.body.style.paddingTop = '0';
-      }
-    }
-
-    // 渲染祝福语列表
-    function renderBlessings(blessingsList, highlightedId = null) {
+    function renderBlessings(highlightId = null) {
       const container = document.getElementById('blessingContainer');
-      container.innerHTML = '';
-      
-      if (blessingsList.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full text-center py-12">
-            <i class="fa fa-search text-4xl text-gray-300 mb-4"></i>
-            <p class="text-gray-500">请输入1-100之间的数字</p>
-          </div>
-        `;
-        return;
-      }
-      
-      blessingsList.forEach(blessing => {
-        const card = document.createElement('div');
-        const isHighlighted = highlightedId === blessing.id;
-        
-        card.className = `bg-white rounded-xl shadow-custom p-4 scale-hover ${isHighlighted ? 'card-highlight border border-primary' : 'border border-gray-100'}`;
-        card.innerHTML = `
-          <div class="flex items-start mb-3">
-            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3 flex-shrink-0">
-              <span class="text-primary font-bold text-sm">${blessing.id}</span>
+      container.innerHTML = blessings.map(blessing => `
+        <div class="blessing-card bg-white rounded-xs shadow-ultra-micro p-2 border border-gray-100 ${highlightId === blessing.id ? 'border-primary/30 bg-primary/5' : ''}">
+          <div class="flex items-center mb-1.5">
+            <div class="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center mr-1.5">
+              <span class="text-primary font-medium text-[10px]">${blessing.id}</span>
             </div>
+            <p class="text-gray-800 text-[11px] ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
+              ${blessing.content || '（无内容）'}
+            </p>
           </div>
-          <p class="text-gray-800 mb-3 text-balance text-sm ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
-            ${blessing.content === '无' ? '（无内容）' : blessing.content}
-          </p>
           <div class="flex justify-between items-center">
-            <span class="text-xs text-gray-400">ID: ${blessing.id.toString().padStart(3, '0')}</span>
-            <button class="copy-btn px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-custom flex items-center text-sm" data-id="${blessing.id}">
-              <i class="fa fa-copy mr-1"></i> 复制
+            <span class="text-[10px] text-gray-400">ID: ${blessing.id.toString().padStart(3, '0')}</span>
+            <button class="copy-btn px-1.5 py-0.5 bg-primary text-white text-[10px] rounded-xs" data-id="${blessing.id}">
+              <i class="fa fa-copy mr-0.5"></i> 复制
             </button>
           </div>
-        `;
-        container.appendChild(card);
-        
-        // 如果是高亮卡片，滚动到视图中央
-        if (isHighlighted) {
-          setTimeout(() => {
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }, 100);
-        }
-      });
-      
-      // 添加复制按钮事件监听
+        </div>
+      `).join('');
+
       document.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const id = parseInt(this.getAttribute('data-id'));
-          const blessing = blessings.find(b => b.id === id);
+        btn.addEventListener('click', () => {
+          const id = parseInt(btn.dataset.id);
+          const content = blessings.find(b => b.id === id).content;
+          if (content === '无') return showToast('无内容');
           
-          // 复制时不包含序号，无内容则提示
-          if (blessing.content === '无') {
-            showToast('此条祝福语无内容');
-            return;
-          }
-          
-          copyToClipboard(blessing.content);
-          showToast();
-          
-          // 更新按钮状态
-          const originalText = this.innerHTML;
-          this.innerHTML = '<i class="fa fa-check mr-1"></i> 已复制';
-          this.classList.add('bg-success');
-          this.classList.remove('bg-primary');
-          
-          // 恢复按钮状态
-          setTimeout(() => {
-            this.innerHTML = originalText;
-            this.classList.remove('bg-success');
-            this.classList.add('bg-primary');
-          }, 2000);
+          navigator.clipboard.writeText(content).then(() => {
+            showToast();
+            btn.innerHTML = '<i class="fa fa-check mr-0.5"></i> 已复制';
+            btn.classList.add('bg-success');
+            setTimeout(() => {
+              btn.innerHTML = '<i class="fa fa-copy mr-0.5"></i> 复制';
+              btn.classList.remove('bg-success');
+            }, 1500);
+          });
         });
       });
     }
 
-    // 初始化事件监听
-    function initEventListeners() {
-      // 搜索功能
-      const searchInput = document.getElementById('searchInput');
-      searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.trim();
-        
-        // 清空输入时显示全部祝福语
-        if (searchTerm === '') {
-          renderBlessings(blessings);
-          return;
-        }
-        
-        // 检查是否为数字
-        const number = parseInt(searchTerm);
-        if (isNaN(number) || number < 1 || number > 100) {
-          renderBlessings([]);
-          return;
-        }
-        
-        // 找到对应祝福语并高亮显示
-        const found = blessings.find(b => b.id === number);
-        if (found) {
-          // 将找到的祝福语移到数组第一个位置
-          const newBlessingsOrder = [...blessings];
-          const index = newBlessingsOrder.findIndex(b => b.id === number);
-          if (index !== -1) {
-            const [blessing] = newBlessingsOrder.splice(index, 1);
-            newBlessingsOrder.unshift(blessing);
-          }
-          renderBlessings(newBlessingsOrder, number);
-        } else {
-          renderBlessings([]);
-        }
-      });
-    }
-
-    // 复制到剪贴板
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text)
-        .catch(err => {
-          console.error('复制失败: ', err);
-          // 备选方案：创建临时文本域复制
-          const textArea = document.createElement('textarea');
-          textArea.value = text;
-          textArea.style.position = 'fixed';
-          document.body.appendChild(textArea);
-          textArea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textArea);
-        });
-    }
-
-    // 显示提示框
-    function showToast(message = '已复制') {
-      const toast = document.getElementById('toast');
-      toast.querySelector('span').textContent = message;
-      toast.classList.replace('opacity-0', 'opacity-100');
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      if (!val) return renderBlessings();
       
-      setTimeout(() => {
-        toast.classList.replace('opacity-100', 'opacity-0');
-      }, 2000);
+      const num = parseInt(val);
+      if (isNaN(num) || num < 1 || num > 100) {
+        return document.getElementById('blessingContainer').innerHTML = 
+          '<p class="text-center text-gray-400 text-[10px] py-4">请输入1-100的有效数字</p>';
+      }
+      
+      renderBlessings(num);
+    });
+
+    document.getElementById('searchInput').addEventListener('focus', (e) => {
+      e.target.classList.add('search-focus');
+    });
+
+    document.getElementById('searchInput').addEventListener('blur', (e) => {
+      e.target.classList.remove('search-focus');
+    });
+
+    document.addEventListener('DOMContentLoaded', renderBlessings);
+
+    function showToast(msg = '已复制') {
+      const toast = document.getElementById('toast');
+      toast.querySelector('span').textContent = msg;
+      toast.classList.add('opacity-100');
+      setTimeout(() => toast.classList.remove('opacity-100'), 1200);
     }
   </script>
 </body>
