@@ -21,10 +21,10 @@
             inter: ['Inter', 'system-ui', 'sans-serif'],
           },
           boxShadow: {
-            'ultra-micro': '0 1px 2px rgba(0,0,0,0.04)',
+            'micro': '0 1px 4px rgba(0,0,0,0.05)',
           },
           borderRadius: {
-            'xs': '2px',
+            'sm': '4px',
           }
         },
       }
@@ -36,47 +36,45 @@
       overscroll-behavior: none;
     }
     .blessing-card {
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .blessing-card:hover {
-      transform: translateX(2px);
-      box-shadow: 0 1px 4px rgba(22, 93, 255, 0.08);
-    }
-    .search-focus {
-      box-shadow: 0 0 0 2px rgba(22, 93, 255, 0.2);
+      transform: translateX(4px);
+      box-shadow: 0 2px 8px rgba(22, 93, 255, 0.1);
     }
   </style>
 </head>
 <body class="font-inter bg-neutral-light min-h-screen">
 
-  <div class="px-3 py-4 bg-white">
+  <div class="px-4 py-6 bg-white">
     <div class="max-w-6xl mx-auto">
       <div class="relative">
         <input type="text" id="searchInput" placeholder="输入1-100的数字搜索..." 
-               class="w-full pl-8 pr-3 py-2 rounded-xs border border-gray-100 focus:outline-none text-xs" maxlength="3">
-        <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+               class="w-full pl-10 pr-4 py-2.5 rounded-sm border border-gray-200 focus:ring-primary/30 focus:border-primary outline-none text-sm" maxlength="3">
+        <i class="fa fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
       </div>
     </div>
   </div>
 
-  <main class="max-w-6xl mx-auto px-3 pb-10">
-    <div class="grid grid-cols-1 gap-2" id="blessingContainer">
-      <!-- 祝福语卡片将通过JavaScript动态生成 -->
+  <main class="max-w-6xl mx-auto px-4 pb-12">
+    <div class="grid grid-cols-1 gap-3" id="blessingContainer">
+      <!-- 祝福语卡片动态生成 -->
     </div>
   </main>
 
-  <footer class="bg-white border-t border-gray-100 py-2">
-    <div class="text-center text-[10px] text-gray-400">
-      © 2025 祝福语工具 - 让表达更简单
+  <footer class="bg-white border-t border-gray-200 py-3">
+    <div class="text-center text-xs text-gray-500">
+      © 2025 祝福语工具
     </div>
   </footer>
 
-  <div id="toast" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-success text-white px-3 py-1.5 rounded-xs shadow-sm opacity-0 transition-opacity duration-200 text-xs">
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-success text-white px-4 py-2 rounded-sm shadow-md opacity-0 transition-opacity duration-300">
     <i class="fa fa-check mr-1"></i>
     <span>已复制</span>
   </div>
 
   <script>
+    // 完整的100条祝福语数据
     const blessings = [
       { id: 1, content: "祝大家端午安康" },
       { id: 2, content: "香囊寄思" },
@@ -177,77 +175,65 @@
       { id: 97, content: "咸蛋黄遇见白糯米" },
       { id: 98, content: "幸运的我遇见最好的你" },
       { id: 99, content: "我从咸粽区来看甜粽区的你" },
-      { id: 100, content: "五彩绳缠住了思念" }
+      { id: 100, content: "五彩绳缠住了思念" },
     ];
 
-    function renderBlessings(highlightId = null) {
+    // 渲染函数
+    function renderBlessings() {
       const container = document.getElementById('blessingContainer');
       container.innerHTML = blessings.map(blessing => `
-        <div class="blessing-card bg-white rounded-xs shadow-ultra-micro p-2 border border-gray-100 ${highlightId === blessing.id ? 'border-primary/30 bg-primary/5' : ''}">
-          <div class="flex items-center mb-1.5">
-            <div class="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center mr-1.5">
-              <span class="text-primary font-medium text-[10px]">${blessing.id}</span>
+        <div class="blessing-card bg-white rounded-sm shadow-micro p-3">
+          <div class="flex items-center mb-2">
+            <div class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mr-2">
+              <span class="text-primary font-semibold text-xs">${blessing.id}</span>
             </div>
-            <p class="text-gray-800 text-[11px] ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
+            <p class="text-gray-800 text-xs ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
               ${blessing.content || '（无内容）'}
             </p>
           </div>
           <div class="flex justify-between items-center">
-            <span class="text-[10px] text-gray-400">ID: ${blessing.id.toString().padStart(3, '0')}</span>
-            <button class="copy-btn px-1.5 py-0.5 bg-primary text-white text-[10px] rounded-xs" data-id="${blessing.id}">
+            <span class="text-xs text-gray-400">ID: ${blessing.id.toString().padStart(3, '0')}</span>
+            <button class="copy-btn px-8 py-3 bg-primary text-white text-xs rounded-sm" data-id="${blessing.id}">
               <i class="fa fa-copy mr-0.5"></i> 复制
             </button>
           </div>
         </div>
       `).join('');
 
+      // 绑定复制事件
       document.querySelectorAll('.copy-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const id = parseInt(btn.dataset.id);
           const content = blessings.find(b => b.id === id).content;
           if (content === '无') return showToast('无内容');
-          
-          navigator.clipboard.writeText(content).then(() => {
-            showToast();
-            btn.innerHTML = '<i class="fa fa-check mr-0.5"></i> 已复制';
-            btn.classList.add('bg-success');
-            setTimeout(() => {
-              btn.innerHTML = '<i class="fa fa-copy mr-0.5"></i> 复制';
-              btn.classList.remove('bg-success');
-            }, 1500);
-          });
+          navigator.clipboard.writeText(content).then(() => showToast());
         });
       });
     }
 
+    // 搜索功能
     document.getElementById('searchInput').addEventListener('input', (e) => {
       const val = e.target.value.trim();
       if (!val) return renderBlessings();
       
       const num = parseInt(val);
       if (isNaN(num) || num < 1 || num > 100) {
-        return document.getElementById('blessingContainer').innerHTML = 
-          '<p class="text-center text-gray-400 text-[10px] py-4">请输入1-100的有效数字</p>';
+        return container.innerHTML = '<p class="text-center text-gray-400 text-xs">请输入1-100的有效数字</p>';
       }
       
-      renderBlessings(num);
+      const found = blessings.find(b => b.id === num);
+      renderBlessings([found, ...blessings.filter(b => b.id !== num)]);
     });
 
-    document.getElementById('searchInput').addEventListener('focus', (e) => {
-      e.target.classList.add('search-focus');
-    });
-
-    document.getElementById('searchInput').addEventListener('blur', (e) => {
-      e.target.classList.remove('search-focus');
-    });
-
+    // 初始化渲染
     document.addEventListener('DOMContentLoaded', renderBlessings);
 
+    // 提示框
     function showToast(msg = '已复制') {
       const toast = document.getElementById('toast');
       toast.querySelector('span').textContent = msg;
       toast.classList.add('opacity-100');
-      setTimeout(() => toast.classList.remove('opacity-100'), 1200);
+      setTimeout(() => toast.classList.remove('opacity-100'), 1500);
     }
   </script>
 
