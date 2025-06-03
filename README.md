@@ -46,15 +46,7 @@
 </head>
 <body class="font-inter bg-neutral-light min-h-screen">
 
-  <div class="px-4 py-6 bg-white">
-    <div class="max-w-6xl mx-auto">
-      <div class="relative">
-        <input type="text" id="searchInput" placeholder="输入1-100的数字搜索..." 
-               class="w-full pl-10 pr-4 py-2.5 rounded-sm border border-gray-200 focus:ring-primary/30 focus:border-primary outline-none text-sm" maxlength="3">
-        <i class="fa fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
-      </div>
-    </div>
-  </div>
+
 
   <main class="max-w-6xl mx-auto px-4 pb-12">
     <div class="grid grid-cols-1 gap-3" id="blessingContainer">
@@ -64,8 +56,7 @@
 
   <footer class="bg-white border-t border-gray-200 py-3">
     <div class="text-center text-xs text-gray-500">
-      © 2025 祝福语工具
-    </div>
+       祝福语工具     </div>
   </footer>
 
   <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-success text-white px-4 py-2 rounded-sm shadow-md opacity-0 transition-opacity duration-300">
@@ -211,20 +202,7 @@
       });
     }
 
-    // 搜索功能
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-      const val = e.target.value.trim();
-      if (!val) return renderBlessings();
-      
-      const num = parseInt(val);
-      if (isNaN(num) || num < 1 || num > 100) {
-        return container.innerHTML = '<p class="text-center text-gray-400 text-xs">请输入1-100的有效数字</p>';
-      }
-      
-      const found = blessings.find(b => b.id === num);
-      renderBlessings([found, ...blessings.filter(b => b.id !== num)]);
-    });
-
+    
     // 初始化渲染
     document.addEventListener('DOMContentLoaded', renderBlessings);
 
@@ -236,5 +214,3 @@
       setTimeout(() => toast.classList.remove('opacity-100'), 1500);
     }
   </script>
-
-    
