@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -250,6 +250,5 @@
       setTimeout(() => toast.classList.remove('opacity-100'), 1200);
     }
   </script>
-</body>
-</html>
+
     
