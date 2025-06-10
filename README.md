@@ -180,7 +180,7 @@
           </div>
           <div class="flex justify-between items-center">
             <span class="text-xs text-gray-400">ID: ${blessing.id.toString().padStart(3, '0')}</span>
-   // 控制按键大小
+
             <button class="copy-btn px-8 py-3 bg-primary text-white text-xs rounded-sm" data-id="${blessing.id}">
               <i class="fa fa-copy mr-0.5"></i> 复制
             </button>
