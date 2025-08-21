@@ -122,10 +122,10 @@
         <div class="blessing-card bg-white rounded-sm shadow-micro p-3">
           <div class="flex items-center mb-2">
             <div class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mr-2">
-              <span class="text-primary font-semibold text-lg">${blessing.id}</span>
+              <span class="text-primary font-semibold text-sm">${blessing.id}</span>
             </div>
-            <p class="text-gray-800 text-xs ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
-              ${blessing.content || '（谁知道这条？我不知道）'}
+            <p class="text-gray-800 text-base ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
+              ${blessing.content || '（无内容）'}
             </p>
           </div>
           <div class="flex justify-between items-center">
