@@ -125,7 +125,7 @@
               <span class="text-primary font-semibold text-xs">${blessing.id}</span>
             </div>
             <p class="text-gray-800 text-xs ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
-              ${blessing.content || '（无内容）'}
+              ${blessing.content || '（谁知道这条，我还不知道）'}
             </p>
           </div>
           <div class="flex justify-between items-center">
