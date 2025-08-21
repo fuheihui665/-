@@ -76,7 +76,7 @@
     { id: 12, content: "暑意渐消好运常伴" },
     { id: 13, content: "假期尾声快乐永存" },
     { id: 14, content: "夏日悠长秋来收获" },
-    { id: 15, content: "夏凤拂去秋月将至" },
+    { id: 15, content: "夏风拂去秋月将至" },
     { id: 16, content: "盛夏余温温暖一秋" },
     { id: 17, content: "光阴入酒敬此夏秋" },
     { id: 18, content: "夏日不负未来可期" },
@@ -112,7 +112,7 @@
     { id: 48, content: "自汲新泉破茗烹" },
     { id: 49, content: "愿你为秋天开个好头" },
     { id: 50, content: "与快乐相伴" },
-
+    { id: 51, content: "无" },
     ];
 
     // 渲染函数
@@ -122,10 +122,10 @@
         <div class="blessing-card bg-white rounded-sm shadow-micro p-3">
           <div class="flex items-center mb-2">
             <div class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mr-2">
-              <span class="text-primary font-semibold text-xs">${blessing.id}</span>
+              <span class="text-primary font-semibold text-lg">${blessing.id}</span>
             </div>
             <p class="text-gray-800 text-xs ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
-              ${blessing.content || '（谁知道这条，我还不知道）'}
+              ${blessing.content || '（谁知道这条？我不知道）'}
             </p>
           </div>
           <div class="flex justify-between items-center">
@@ -160,5 +160,4 @@
       setTimeout(() => toast.classList.remove('opacity-100'), 1500);
     }
   </script>
-
-    
+  
