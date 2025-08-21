@@ -112,7 +112,6 @@
     { id: 48, content: "自汲新泉破茗烹" },
     { id: 49, content: "愿你为秋天开个好头" },
     { id: 50, content: "与快乐相伴" },
-    { id: 51, content: "无" },
     ];
 
     // 渲染函数
@@ -121,10 +120,11 @@
       container.innerHTML = blessings.map(blessing => `
         <div class="blessing-card bg-white rounded-sm shadow-micro p-3">
           <div class="flex items-center mb-2">
-            <div class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mr-2">
+            <div class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mr-2 mt-0.5">
               <span class="text-primary font-semibold text-sm">${blessing.id}</span>
             </div>
             <p class="text-gray-800 text-base ${blessing.content === '无' ? 'text-gray-400 italic' : ''}">
+              ${blessing.content === '无' ? '<i class="fa fa-exclamation-circle mr-1 text-orange-400"></i>' : ''}
               ${blessing.content || '（无内容）'}
             </p>
           </div>
